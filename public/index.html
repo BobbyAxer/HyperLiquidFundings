@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>hyperLiquid Funding Rates</title>
+    <!-- Axios CDN -->
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <!-- jQuery library -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <!-- DataTables CSS and JS -->
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.11.3/css/jquery.dataTables.css">
+    <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.11.3/js/jquery.dataTables.js"></script>
+    <style>
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        th, td {
+            border: 1px solid black;
+            padding: 8px;
+            text-align: left;
+        }
+        th {
+            background-color: #f2f2f2;
+        }
+    </style>
+</head>
+<body>
+    <h1>hyperLiquid Funding Rates</h1>
+    <p>hyperLiquid: <a href="https://app.hyperliquid.xyz/join/BOBBYAXE">Sign up here</a></p>
+    <table id="ratesTable" class="display">
+        <thead>
+            <tr>
+                <th>Coin</th>
+                <th>1h</th>
+                <th>6h</th>
+                <th>12h</th>
+                <th>24h</th>
+                <th>72h</th>
+                <th>7d</th>
+                <th>14d</th>
+            </tr>
+        </thead>
+        <tbody>
+            <!-- Data will be inserted here by script.js -->
+        </tbody>
+    </table>
+    <script src="script.js"></script>
+</body>
+</html>
