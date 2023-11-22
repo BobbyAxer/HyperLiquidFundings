@@ -51,8 +51,14 @@ async function updateData() {
 }
 
 function displayData(allCoinData) {
-    const table = $('#ratesTable').DataTable();
-    table.clear(); // Clear previous data
+    if ( $.fn.DataTable.isDataTable('#ratesTable') ) {
+        $('#ratesTable').DataTable().clear().destroy();
+    }
+
+    const table = $('#ratesTable').DataTable({
+        // Set the default page length to 100 entries
+        "pageLength": 100
+    });
 
     allCoinData.forEach(({ coin, rates }) => {
         table.row.add([
