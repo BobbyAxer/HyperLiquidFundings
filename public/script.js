@@ -51,6 +51,8 @@ async function updateData() {
 }
 
 function displayData(allCoinData) {
+    $('#loadingMessage').hide();
+
     if ( $.fn.DataTable.isDataTable('#ratesTable') ) {
         $('#ratesTable').DataTable().clear().destroy();
     }
