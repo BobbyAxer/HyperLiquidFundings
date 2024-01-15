@@ -56,7 +56,7 @@ function delay(ms) {
 // }
 
 async function updateData() {
-    const coins = ['WIF', 'BTC', 'ETH', 'SOL']; // or await fetchCoins();
+    const coins = await fetchCoins();
     const intervals = [1, 6, 12, 24, 72, 168, 336];
     const now = Date.now();
 
