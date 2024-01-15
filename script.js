@@ -66,14 +66,14 @@ async function updateData() {
             const startTime = now - hours * 60 * 60 * 1000;
             const history = await fetchFundingHistory(coin, startTime);
             results.push({ interval: `${hours}h`, rate: calculateAverageFundingRate(history) });
-            await delay(500); // Introduce a delay here
+            await delay(300); // Introduce a delay here
         }
         // Process results
         const coinData = { coin, rates: results.reduce((acc, curr) => ({...acc, [curr.interval]: curr.rate}), {}) };
         // Add data to table or whatever processing you need
     }
 
-    setTimeout(updateData, 10 * 60 * 1000); // Update every 10 minutes
+    setTimeout(updateData, 30 * 60 * 1000); // Update every 10 minutes
 }
 
 
