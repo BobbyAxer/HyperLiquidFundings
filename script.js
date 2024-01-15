@@ -25,30 +25,56 @@ async function fetchCoins() {
     }
 }
 
+function delay(ms) {
+    return new Promise(resolve => setTimeout(resolve, ms));
+}
+
+
 // Existing functions (fetchCoins, fetchFundingHistory, calculateAverageFundingRate)
+
+// async function updateData() {
+//     const coins = await fetchCoins();
+//     const now = Date.now();
+//     const intervals = [1, 6, 12, 24, 72, 168, 336]; // hours for 1h, 6h, 12h, 24h, 72h, 7 days, 14 days
+
+//     const fetchPromises = coins.map(coin => {
+//         return Promise.all(intervals.map(hours => {
+//             const startTime = now - hours * 60 * 60 * 1000; // Convert hours to milliseconds
+//             return fetchFundingHistory(coin, startTime).then(history => {
+//                 return { interval: `${hours}h`, rate: calculateAverageFundingRate(history) };
+//             });
+//         }))
+//         .then(results => {
+//             return { coin, rates: results.reduce((acc, curr) => ({...acc, [curr.interval]: curr.rate}), {}) };
+//         });
+//     });
+
+//     const allCoinData = await Promise.all(fetchPromises);
+//     displayData(allCoinData);
+
+//     setTimeout(updateData, 10 * 60 * 1000); // Update every 10 minutes
+// }
 
 async function updateData() {
     const coins = await fetchCoins();
     const now = Date.now();
-    const intervals = [1, 6, 12, 24, 72, 168, 336]; // hours for 1h, 6h, 12h, 24h, 72h, 7 days, 14 days
 
-    const fetchPromises = coins.map(coin => {
-        return Promise.all(intervals.map(hours => {
-            const startTime = now - hours * 60 * 60 * 1000; // Convert hours to milliseconds
-            return fetchFundingHistory(coin, startTime).then(history => {
-                return { interval: `${hours}h`, rate: calculateAverageFundingRate(history) };
-            });
-        }))
-        .then(results => {
-            return { coin, rates: results.reduce((acc, curr) => ({...acc, [curr.interval]: curr.rate}), {}) };
-        });
-    });
-
-    const allCoinData = await Promise.all(fetchPromises);
-    displayData(allCoinData);
+    for (const coin of coins) {
+        const results = [];
+        for (const hours of intervals) {
+            const startTime = now - hours * 60 * 60 * 1000;
+            const history = await fetchFundingHistory(coin, startTime);
+            results.push({ interval: `${hours}h`, rate: calculateAverageFundingRate(history) });
+            await delay(300); // Introduce a delay here
+        }
+        // Process results
+        const coinData = { coin, rates: results.reduce((acc, curr) => ({...acc, [curr.interval]: curr.rate}), {}) };
+        // Add data to table or whatever processing you need
+    }
 
     setTimeout(updateData, 10 * 60 * 1000); // Update every 10 minutes
 }
+
 
 function displayData(allCoinData) {
     $('#loadingMessage').hide();
