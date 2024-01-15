@@ -56,9 +56,11 @@ function delay(ms) {
 // }
 
 async function updateData() {
-    const coins = ['WIF', 'BTC', 'ETH', 'SOL']//await fetchCoins();
-    const intervals = [1, 6, 12, 24, 72, 168, 336]
+    const coins = ['WIF', 'BTC', 'ETH', 'SOL']; // or await fetchCoins();
+    const intervals = [1, 6, 12, 24, 72, 168, 336];
     const now = Date.now();
+
+    let allCoinData = []; // Array to hold data for all coins
 
     for (const coin of coins) {
         const results = [];
@@ -68,14 +70,18 @@ async function updateData() {
             results.push({ interval: `${hours}h`, rate: calculateAverageFundingRate(history) });
             await delay(500); // Introduce a delay here
         }
-        // Process results
-        const coinData = { coin, rates: results.reduce((acc, curr) => ({...acc, [curr.interval]: curr.rate}), {}) };
-        // Add data to table or whatever processing you need
+        // Aggregate data for each coin
+        allCoinData.push({ coin, rates: results.reduce((acc, curr) => ({...acc, [curr.interval]: curr.rate}), {}) });
     }
-     displayData(coinData);
 
-    setTimeout(updateData, 30 * 60 * 1000); // Update every 10 minutes
+    // Call displayData with the aggregated data
+    displayData(allCoinData);
+
+    setTimeout(updateData, 30 * 60 * 1000); // Update every 30 minutes
 }
+
+// Rest of the code remains the same
+
 
 
 function displayData(allCoinData) {
