@@ -56,7 +56,7 @@ function delay(ms) {
 // }
 
 async function updateData() {
-    const coins = await fetchCoins();
+    const coins = ['WIF', 'BTC', 'ETH', 'SOL']//await fetchCoins();
     const intervals = [1, 6, 12, 24, 72, 168, 336]
     const now = Date.now();
 
@@ -72,6 +72,7 @@ async function updateData() {
         const coinData = { coin, rates: results.reduce((acc, curr) => ({...acc, [curr.interval]: curr.rate}), {}) };
         // Add data to table or whatever processing you need
     }
+     displayData(coinData);
 
     setTimeout(updateData, 30 * 60 * 1000); // Update every 10 minutes
 }
