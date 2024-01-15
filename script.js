@@ -66,7 +66,7 @@ async function updateData() {
             const startTime = now - hours * 60 * 60 * 1000;
             const history = await fetchFundingHistory(coin, startTime);
             results.push({ interval: `${hours}h`, rate: calculateAverageFundingRate(history) });
-            await delay(300); // Introduce a delay here
+            await delay(500); // Introduce a delay here
         }
         // Process results
         const coinData = { coin, rates: results.reduce((acc, curr) => ({...acc, [curr.interval]: curr.rate}), {}) };
